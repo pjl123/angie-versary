@@ -5,7 +5,7 @@
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="Css/angieversary.css"/>
 		<script type="text/javascript">
-            answers = {
+            var answers = {
                 "question1": "heather",
                 "question2": "cheesesteak",
                 "question3": "zee bar",
@@ -24,12 +24,12 @@
                     return;
                 }
                 
-                valid = true;
+                var valid = true;
                 
                 questionInputs = document.getElementsByName("question");
                 for (var i = 0; i < questionInputs.length; i++){
-                    valid &= questionInputs[i].value.toLowerCase().indexOf(answers[questionInputs[i].attributes["id"].value]) >= 0;
-                    if (valid) {
+                    var correct = questionInputs[i].value.toLowerCase().indexOf(answers[questionInputs[i].attributes["id"].value]) >= 0;
+                    if (correct) {
                         questionInputs[i].parentNode.classList.remove("danger");
                         questionInputs[i].parentNode.classList.add("success");
                     }                        
@@ -37,6 +37,7 @@
                         questionInputs[i].parentNode.classList.remove("success");
                         questionInputs[i].parentNode.classList.add("danger");
                     }
+                    valid &= correct;
                 }
                 
                 if (valid){
