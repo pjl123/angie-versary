@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="Css/angieversary.css"/>
+
+		<script type="text/javascript">
+
+var stage, w, h, loader;
+var pat;
+
+function init() {
+	stage = new createjs.Stage("gameDisplay");
+
+	// grab canvas width and height for later calculations:
+	w = stage.canvas.width;
+	h = stage.canvas.height;
+
+	manifest = [
+		{src: "TurnSpriteSheet.png", id: "Pat"},
+        {src: "Pointer.png", id: "pointer"},
+        {src: "Background.png", id: "background"},
+        {src: "Heart.png", id: "heart"}
+	];
+
+	loader = new createjs.LoadQueue(false);
+	loader.addEventListener("complete", handleComplete);
+	loader.loadManifest(manifest, true, "../Art/");
+}
+
+function handleComplete() {
+    var background = loader.getResult("background");
+	back = new createjs.Shape();
+	back.graphics.beginBitmapFill(background).drawRect(0, 0, background.width, background.height);
+	back.tileW = background.width;
+	back.y = h - background.height;
+    
+    pointer = new createjs.Bitmap(loader.getResult("pointer"));
+    pointer.setTransform(100, 100, 1, 1);
+    
+	var spriteSheet = new createjs.SpriteSheet({
+			framerate: 10,
+			"images": [loader.getResult("Pat")],
+			"frames": {"regX": 128, "height": 256, "count": 11, "regY": 128, "width": 256},
+			// define two animations, run (loops, 1.5x speed) and jump (returns to run):
+			"animations": {
+				"turn1": [0, 1, "turn1"],
+                "turn2": [1, 2, "turn2"],
+                "turn3": [2, 3, "turn3"],
+                "turn4": [3, 4, "turn4"],
+                "turn5": [4, 5, "turn5"],
+                "turn6": [5, 6, "turn6"],
+                "turn7": [6, 7, "turn7"],
+                "turn8": [7, 8, "turn8"],
+                "turn9": [8, 9, "turn9"],
+                "turn10": [9, 10, "turn10"],
+                "turn11": [10, 11, "turn11"]
+			}
+		});
+	pat = new createjs.Sprite(spriteSheet);
+    pat.x = w / 2;
+	pat.y = h - 128;
+    
+    winText = new createjs.Text("WINNER! YOU'VE WON MY HEART!", "20px Lucida Console", "#009933");
+    winText.x = 50;
+    winText.y = 100;
+    winText.visible = false;
+    
+    heart = new createjs.Bitmap(loader.getResult("heart"));
+    heart.setTransform(w / 2 - heart.image.width / 2 + 10, 150, .5, .5);
+    heart.visible = false;
+    heart.addEventListener("click", heartClick);
+
+	stage.addChild(back, pat, winText, heart, pointer);
+	stage.addEventListener("stagemousedown", handleTurnClick);
+    stage.cursor = 'none';
+    stage.enableMouseOver();
+
+	createjs.Ticker.timingMode = createjs.Ticker.RAF;
+	createjs.Ticker.addEventListener("tick", tick);
+}
+
+var clickCount = 0;
+function handleTurnClick() {
+    if (clickCount < 11)
+        clickCount++;
+    updatePatSprite();
+}
+            
+function updatePatSprite(){
+    pat.gotoAndStop("turn" + clickCount);
+}
+
+var ellapsedDeltas = 0;
+var MAX_DELTA = 600;
+var complete = false;
+function tick(event) {
+    if (complete){
+        heart.visible = true;
+        winText.visible = true;
+    }
+    else{
+        ellapsedDeltas += event.delta;
+        if (ellapsedDeltas >= MAX_DELTA && clickCount > 0){
+            complete = clickCount == 11
+            
+            clickCount--;
+            if (!complete)
+                updatePatSprite();
+                        
+            ellapsedDeltas = 0;
+        }    
+    }
+        
+    pointer.x = stage.mouseX;
+    pointer.y = stage.mouseY;
+    
+	stage.update(event);
+}
+            
+function heartClick(){
+    window.location = '/Angieversary2.html'
+}
+        </script>
+	</head>
+	<body class="level1" onload="init()">
+        <h1>Happy Angie-versary!!</h1>
+        <h2>Level 1: Meet Rick</h2>
+		<canvas id="gameDisplay" width="500" height="300"></canvas>
+	</body>
+</html>

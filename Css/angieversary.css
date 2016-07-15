@@ -1,0 +1,75 @@
+canvas {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 800px;
+}
+
+table {
+    margin: auto;
+    display: block;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.borderless td,
+.borderless th {
+    border: none !important;
+}
+
+body.level1 {
+    background-color: black;
+}
+
+body.level2 {
+    background-color: floralwhite;
+}
+
+h1,
+h2 {
+    text-align: center;
+}
+
+.level1 h1,
+.level1 h2 {
+    text-align: left;
+}
+
+.level1 {
+    font-family: Impact, Charcoal, sans-serif;
+    color: floralwhite;
+}
+
+.level2 {
+    font-family: Impact, Charcoal, sans-serif;
+    color: lightpink;
+    text-align: right;
+    font-size: 20px;
+}
+
+.big-prize {
+    font-family: Impact, Charcoal, sans-serif;
+    color: lightpink;
+    text-align: justify;
+    margin: auto;
+    padding-left: 20%;
+    padding-right: 20%;
+    font-size: 20px;
+}
+
+li {
+    list-style-position: inside;
+    text-align: right;
+}
+
+button {
+    background-color: papayawhip !important;
+    border-color: lightpink !important;
+}
+
+img {
+    display: block;
+    margin: auto;
+}
