@@ -23,7 +23,7 @@ body.level1 {
     background-color: black;
 }
 
-body.level2 {
+body.level2, body.big-prize {
     background-color: floralwhite;
 }
 
