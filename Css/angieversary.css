@@ -59,6 +59,10 @@ h2 {
     font-size: 20px;
 }
 
+.next-anniversary-link {
+    color: #f54b42;
+}
+
 li {
     list-style-position: inside;
     text-align: right;
